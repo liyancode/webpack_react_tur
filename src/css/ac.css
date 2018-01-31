@@ -1,5 +1,29 @@
-.root {
-  background-color: #eec;
-  padding: 10px;
-  border: 3px solid #ccc;
+/* import bootstrap css from cdn*/
+@import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
+
+.sp-nav-navbar-brand{
+  color: #fff !important;
+  /*font-style: italic;*/
+}
+#sp-nav-createnewtest-btn{
+  margin-top: 8px;
+}
+.sp-nav-currentworkspace-icon{
+  color:#44b349;
+  animation:currentworkspace-icon 3s;
+  -moz-animation:currentworkspace-icon 3s infinite; /* Firefox */
+  -webkit-animation:currentworkspace-icon 3s infinite; /* Safari and Chrome */
+}
+@-moz-keyframes currentworkspace-icon /* Firefox */
+{
+  0%   {color:#44b349;}
+  50%  {color:#eee;}
+  100%   {color:#44b349;}
+}
+
+@-webkit-keyframes currentworkspace-icon /* Safari and Chrome */
+{
+  0%   {color:#44b349;}
+  50%  {color:#eee;}
+  100%   {color:#44b349;}
 }

@@ -1,25 +1,16 @@
-/* import bootstrap css from cdn*/
-@import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css');
-
-html {
-  box-sizing: border-box;
-  -ms-text-size-adjust: 100%;
-  -webkit-text-size-adjust: 100%;
+.spMain{
+  margin-top: 50px;
+}
+.navbar-header>.btn{
+  margin-top: 8px;
+  margin-left: 5px;
+}
+.navbar-header>.btn>.glyphicon{
+  margin-right: 2px;
 }
 
-*, *:before, *:after {
-  box-sizing: inherit;
-}
-
-body {
-  margin: 0;
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
-
-h1, h2, h3, h4, h5, h6, p, ul {
-  margin: 0;
-  padding: 0;
-}
-button{
-	font-size: 20px;
+.nav>.active>a {
+  font-weight: 700;
+  background-color: transparent;
+  border-right: 2px solid #563d7c;
 }

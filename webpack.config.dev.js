@@ -30,7 +30,8 @@ module.exports={
     loaders: [
     {
       test: /\.css$/,
-      loader: 'style-loader!css-loader?modules'
+      //loader: 'style-loader!css-loader?modules'
+      loader: 'style-loader!css-loader'
     }, 
     { test: /\.(js|jsx)$/, loader: 'babel-loader' }
     ]
@@ -39,6 +40,9 @@ module.exports={
   devServer:{
     port: 8889,
     contentBase:'./dist',
-    hot:true
+    hot:true,
+    proxy: {
+      "/api/**": "http://localhost:4567"
+    }
   }
 }
