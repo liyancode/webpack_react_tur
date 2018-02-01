@@ -33,7 +33,14 @@ module.exports={
       //loader: 'style-loader!css-loader?modules'
       loader: 'style-loader!css-loader'
     }, 
-    { test: /\.(js|jsx)$/, loader: 'babel-loader' }
+    { test: /\.(js|jsx)$/, loader: 'babel-loader' },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        use: [
+          'url-loader?limit=10000',
+          'img-loader'
+        ]
+      }
     ]
   },
 
