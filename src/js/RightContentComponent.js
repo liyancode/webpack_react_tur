@@ -101,7 +101,7 @@ const ContentTestsTable = (props)=> {
         });
     }
     return (
-        <table className="table table-condensed table-bordered table-hover">
+        <table className="table table-condensed table-bordered table-hover tablesorter" id="tests_table">
             <thead>
             <tr>
                 <th>
@@ -219,6 +219,19 @@ const ContentOfTests = (props)=> {
         </div>
     );
 };
+// edit test content
+const ContentOfEditTest = (props)=> {
+    return (
+        <div>
+            <div className="row">
+                <div className="col-sm-12">
+                    <Breadcrumb text={props.breadcrumbText}/>
+                </div>
+
+            </div>
+        </div>
+    );
+};
 
 // reports content
 const ContentOfReports=(props)=>{
@@ -243,6 +256,11 @@ const RightContentComponent = (props)=> {
                             projectsDataArr={props.dataOfProjects}
                             projectsSelectOnChange={props.projectSelectOnChange}
                             testsDataArr={props.dataOfTests}
+                />
+        );
+    }else if(props.page==='editTest'){
+        return (
+            <ContentOfEditTest breadcrumbText={props.breadcrumbText}
                 />
         );
     }else{
