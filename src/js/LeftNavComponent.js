@@ -4,7 +4,7 @@
 import React from 'react';
 
 const LeftNavComponent=(props)=>{
-    if(props.page==="tests"){
+    if(props.page==="tests"||props.page==="editTest"){
         return (
             <ul className="nav left-nav-ul">
                 <li className="active">
