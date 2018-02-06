@@ -207,6 +207,8 @@ const ContentOfTests = (props)=> {
                 <div className="col-sm-12">
                     <Breadcrumb text={props.breadcrumbText}/>
                 </div>
+            </div>
+            <div className="row">
                 <div className="col-sm-12 col-md-3 col-lg-2">
                     <SelectList withAll={true} prefix="Project" dataArr={props.projectsDataArr}
                                 onChange={props.projectsSelectOnChange}/>
@@ -219,28 +221,89 @@ const ContentOfTests = (props)=> {
         </div>
     );
 };
+const LoadConfig = (props)=> {
+
+    return (
+
+        <div className="col-sm-12">
+            <div className="row">
+                <div className="col-lg-3">
+                    <label>Virtual Users:</label>
+                    <input className="form-control" type="number" defaultValue="1" max="25" min="1"
+                           data-input="virtual_users" onChange={props.onChange}/>
+                </div>
+                <div className="col-lg-3">
+                    <label>Loop Count:</label>
+                    <input className="form-control" type="number" defaultValue="1" min="1" data-input="loop_count"
+                           onChange={props.onChange}/>
+                </div>
+                <div className="col-lg-2 checkbox">
+                    <label>
+                        <input type="checkbox" onChange={props.onChange}/>
+                        function test
+                    </label>
+                </div>
+                <div className="col-lg-4">
+
+                    <button className="btn btn-primary" onClick={props.submitBtnClick}>Submit test</button>
+
+                </div>
+            </div>
+
+        </div>
+    );
+};
+const ApiInfo = (props)=> {
+    return (
+        <div className="col-sm-12">
+            <div className="row">
+                <div className="col-lg-10">
+                    <select className="form-control">
+                        <option value="get">GET</option>
+                        <option value="post">POST</option>
+                        <option value="put">PUT</option>
+                        <option value="delete">DELETE</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    );
+};
 // edit test content
 const ContentOfEditTest = (props)=> {
+    const padding15LR={
+        paddingLeft:15,
+        paddingRight:15
+    }
     return (
         <div>
             <div className="row">
                 <div className="col-sm-12">
                     <Breadcrumb text={props.breadcrumbText}/>
                 </div>
-
+            </div>
+            <div className="col-lg-10 col-lg-offset-1">
+                <div className="row highlight" style={padding15LR}>
+                    <LoadConfig />
+                </div>
+                <div className="row highlight" style={padding15LR}>
+                    <ApiInfo />
+                </div>
             </div>
         </div>
     );
 };
 
 // reports content
-const ContentOfReports=(props)=>{
+const ContentOfReports = (props)=> {
     return (
         <div>
             <div className="row">
                 <div className="col-sm-12">
                     <Breadcrumb text={props.breadcrumbText}/>
                 </div>
+            </div>
+            <div className="row">
                 <div className="col-sm-12">
                     <ContentReportsTable dataArr={props.reportsDataArr}/>
                 </div>
@@ -250,7 +313,7 @@ const ContentOfReports=(props)=>{
 };
 
 const RightContentComponent = (props)=> {
-    if(props.page==='tests'){
+    if (props.page === 'tests') {
         return (
             <ContentOfTests breadcrumbText={props.breadcrumbText}
                             projectsDataArr={props.dataOfProjects}
@@ -258,12 +321,12 @@ const RightContentComponent = (props)=> {
                             testsDataArr={props.dataOfTests}
                 />
         );
-    }else if(props.page==='editTest'){
+    } else if (props.page === 'editTest') {
         return (
             <ContentOfEditTest breadcrumbText={props.breadcrumbText}
                 />
         );
-    }else{
+    } else {
         return (
             <ContentOfReports breadcrumbText={props.breadcrumbText}
                               reportsDataArr={props.dataOfReports}
