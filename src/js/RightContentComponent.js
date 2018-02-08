@@ -228,24 +228,27 @@ const LoadConfig = (props)=> {
         <div className="col-sm-12">
             <div className="row">
                 <div className="col-lg-3">
-                    <label>Virtual Users:</label>
-                    <input className="form-control" type="number" defaultValue="1" max="25" min="1"
-                           data-input="virtual_users" onChange={props.onChange}/>
+                    <h4><span className="label label-default">Virtual Users ( Max = 15 )</span></h4>
+                    <input className="form-control" type="number" defaultValue={props.testLoad.vu} max="15" min="1"
+                           data-input="virtual_users" required='true' onBlur={props.inputOnMouseLeave}/>
                 </div>
                 <div className="col-lg-3">
-                    <label>Loop Count:</label>
-                    <input className="form-control" type="number" defaultValue="1" min="1" data-input="loop_count"
-                           onChange={props.onChange}/>
+                    <h4><span className="label label-default">Loop Count ( Max = 100 )</span></h4>
+                    <input className="form-control" type="number" defaultValue={props.testLoad.loop} min="1" max="100"
+                           data-input="loop_count" required='true' onBlur={props.inputOnMouseLeave}/>
                 </div>
                 <div className="col-lg-2 checkbox">
                     <label>
-                        <input type="checkbox" onChange={props.onChange}/>
-                        function test
+                        <h4>
+                        <input type="checkbox" data-input="is_func_test_check" checked={props.testLoad.isFunctionTest}onChange={props.isFuncTestCheckBoxOnChange}/>
+                        <span className="label label-info">function test</span>
+                        </h4>
+                        <span className="label label-default" display="none">1 user loop 3 times</span>
                     </label>
                 </div>
                 <div className="col-lg-4">
-
-                    <button className="btn btn-primary" onClick={props.submitBtnClick}>Submit test</button>
+                    <br />
+                    <button className="btn btn-danger" onClick={props.submitBtnClick}>Submit test</button>
 
                 </div>
             </div>
@@ -254,16 +257,85 @@ const LoadConfig = (props)=> {
     );
 };
 const ApiInfo = (props)=> {
+    const styleBorderTop0={
+        borderTop:0,
+        marginTop:2
+    }
     return (
         <div className="col-sm-12">
             <div className="row">
-                <div className="col-lg-10">
-                    <select className="form-control">
+                {/*endpoint config*/}
+                <div className="col-lg-1 col-md-2 col-sm-12">
+                    <select className="form-control" defaultValue={props.testApiInfo.method} onChange={props.selectMethodOnChange}>
                         <option value="get">GET</option>
                         <option value="post">POST</option>
                         <option value="put">PUT</option>
                         <option value="delete">DELETE</option>
                     </select>
+                </div>
+                <div className="col-lg-11 col-md-10 col-sm-12">
+                    <input className="form-control" type="url" data-input="url" required='true' defaultValue={props.testApiInfo.url} placeholder="https://example.com/resources/param=test&v=1"
+                           onBlur={props.inputOnMouseLeave}/>
+                </div>
+            </div>
+            <br />
+            <div className="row">
+                {/*header & body config*/}
+                <div className="col-lg-12">
+                    <ul className="nav nav-tabs">
+                        <li className="active"><a data-toggle="tab" href="#api_info_headers">Headers</a></li>
+                        <li ><a data-toggle="tab" href="#api_info_body">Body</a></li>
+                    </ul>
+                </div>
+                <div className="col-lg-12">
+                    <div className="tab-content">
+                        <div className="tab-pane active" id="api_info_headers">
+                            <div className="row">
+                                <div className="col-lg-4">
+                                    <h5><span className="label label-default">Key</span></h5>
+                                </div>
+                                <div className="col-lg-6">
+                                    <h5><span className="label label-default">Value</span></h5>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-lg-4">
+                                    <input className="form-control" type="text" style={styleBorderTop0}/>
+                                </div>
+                                <div className="col-lg-6">
+                                    <input className="form-control" type="text" style={styleBorderTop0}/>
+                                </div>
+                                <div className="col-lg-2">
+                                    <div className="btn-group btn-group-justified" role="group">
+                                        <div className="btn-group" role="group">
+                                            <button type="button" className="btn btn-default">+</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="row">
+                                <div className="col-lg-4">
+                                    <input className="form-control" type="text" style={styleBorderTop0}/>
+                                </div>
+                                <div className="col-lg-6">
+                                    <input className="form-control" type="text" style={styleBorderTop0}/>
+                                </div>
+                                <div className="col-lg-2">
+                                    <div className="btn-group btn-group-justified" role="group">
+                                        <div className="btn-group" role="group">
+                                            <button type="button" className="btn btn-default">clear</button>
+                                        </div>
+                                        <div className="btn-group" role="group">
+                                            <button type="button" className="btn btn-default">delete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="tab-pane" id="api_info_body">
+                            body
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -282,12 +354,18 @@ const ContentOfEditTest = (props)=> {
                     <Breadcrumb text={props.breadcrumbText}/>
                 </div>
             </div>
-            <div className="col-lg-10 col-lg-offset-1">
+            <div className="col-sm-12 well">
                 <div className="row highlight" style={padding15LR}>
-                    <LoadConfig />
+                    <LoadConfig testLoad={props.editTest.load}
+                                inputOnMouseLeave={props.editTestInputOnMouseLeave}
+                                isFuncTestCheckBoxOnChange={props.editTestIsFuncTestCheckBoxOnChange}
+                                submitBtnClick={props.editTestSubmitBtnClick}/>
                 </div>
                 <div className="row highlight" style={padding15LR}>
-                    <ApiInfo />
+                    <ApiInfo testApiInfo={props.editTest.apiInfo}
+                             inputOnMouseLeave={props.editTestInputOnMouseLeave}
+                             selectMethodOnChange={props.editTestSelectMethodOnChange}
+                        />
                 </div>
             </div>
         </div>
@@ -324,6 +402,11 @@ const RightContentComponent = (props)=> {
     } else if (props.page === 'editTest') {
         return (
             <ContentOfEditTest breadcrumbText={props.breadcrumbText}
+                               editTest={props.editTest}
+                               editTestInputOnMouseLeave={props.editTestInputOnMouseLeave}
+                               editTestIsFuncTestCheckBoxOnChange={props.editTestIsFuncTestCheckBoxOnChange}
+                               editTestSubmitBtnClick={props.editTestSubmitBtnClick}
+                               editTestSelectMethodOnChange={props.editTestSelectMethodOnChange}
                 />
         );
     } else {
