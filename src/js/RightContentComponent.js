@@ -240,8 +240,9 @@ const LoadConfig = (props)=> {
                 <div className="col-lg-2 checkbox">
                     <label>
                         <h4>
-                        <input type="checkbox" data-input="is_func_test_check" checked={props.testLoad.isFunctionTest}onChange={props.isFuncTestCheckBoxOnChange}/>
-                        <span className="label label-info">function test</span>
+                            <input type="checkbox" data-input="is_func_test_check"
+                                   checked={props.testLoad.isFunctionTest} onChange={props.isFuncTestCheckBoxOnChange}/>
+                            <span className="label label-info">function test</span>
                         </h4>
                         <span className="label label-default" display="none">1 user loop 3 times</span>
                     </label>
@@ -257,16 +258,63 @@ const LoadConfig = (props)=> {
     );
 };
 const ApiInfo = (props)=> {
-    const styleBorderTop0={
-        borderTop:0,
-        marginTop:2
+    const styleBorderTop0 = {
+        borderTop: 0,
+        marginTop: 2
     }
+    const headers = props.testApiInfo.headers.slice();
+    //more headers
+    let moreHeadersHtml = [];
+    for (var i = 0; i < headers.length; i++) {
+        console.log(headers[i]);
+        moreHeadersHtml.push(
+            <div className="row" key={"header_"+i}>
+                <div className="col-lg-4">
+                    <input className="form-control" type="text" defaultValue={headers[i].k} style={styleBorderTop0}/>
+                </div>
+                <div className="col-lg-6">
+                    <input className="form-control" type="text" defaultValue={headers[i].v} style={styleBorderTop0}/>
+                </div>
+                <div className="col-lg-2">
+                    <div className="btn-group btn-group-justified" role="group">
+                        <div className="btn-group" role="group">
+                            <button type="button" className="btn btn-default">clear</button>
+                        </div>
+                        <div className="btn-group" role="group">
+                            <button type="button" className="btn btn-default">delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>);
+    }
+
+    if(moreHeadersHtml.length==0){
+        moreHeadersHtml.push(
+            <div className="row api_info_header" key="header_0">
+                <div className="col-lg-4">
+                    <input className="form-control" type="text" style={styleBorderTop0}/>
+                </div>
+                <div className="col-lg-6">
+                    <input className="form-control" type="text" style={styleBorderTop0}/>
+                </div>
+                <div className="col-lg-2">
+                    <div className="btn-group btn-group-justified" role="group">
+                        <div className="btn-group" role="group">
+                            <button type="button" className="btn btn-default">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+
     return (
         <div className="col-sm-12">
             <div className="row">
                 {/*endpoint config*/}
                 <div className="col-lg-1 col-md-2 col-sm-12">
-                    <select className="form-control" defaultValue={props.testApiInfo.method} onChange={props.selectMethodOnChange}>
+                    <select className="form-control" defaultValue={props.testApiInfo.method}
+                            onChange={props.selectMethodOnChange}>
                         <option value="get">GET</option>
                         <option value="post">POST</option>
                         <option value="put">PUT</option>
@@ -274,11 +322,14 @@ const ApiInfo = (props)=> {
                     </select>
                 </div>
                 <div className="col-lg-11 col-md-10 col-sm-12">
-                    <input className="form-control" type="url" data-input="url" required='true' defaultValue={props.testApiInfo.url} placeholder="https://example.com/resources/param=test&v=1"
+                    <input className="form-control" type="url" data-input="url" required='true'
+                           defaultValue={props.testApiInfo.url}
+                           placeholder="https://example.com/resources/param=test&v=1"
                            onBlur={props.inputOnMouseLeave}/>
                 </div>
             </div>
             <br />
+
             <div className="row">
                 {/*header & body config*/}
                 <div className="col-lg-12">
@@ -298,39 +349,7 @@ const ApiInfo = (props)=> {
                                     <h5><span className="label label-default">Value</span></h5>
                                 </div>
                             </div>
-                            <div className="row">
-                                <div className="col-lg-4">
-                                    <input className="form-control" type="text" style={styleBorderTop0}/>
-                                </div>
-                                <div className="col-lg-6">
-                                    <input className="form-control" type="text" style={styleBorderTop0}/>
-                                </div>
-                                <div className="col-lg-2">
-                                    <div className="btn-group btn-group-justified" role="group">
-                                        <div className="btn-group" role="group">
-                                            <button type="button" className="btn btn-default">+</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="row">
-                                <div className="col-lg-4">
-                                    <input className="form-control" type="text" style={styleBorderTop0}/>
-                                </div>
-                                <div className="col-lg-6">
-                                    <input className="form-control" type="text" style={styleBorderTop0}/>
-                                </div>
-                                <div className="col-lg-2">
-                                    <div className="btn-group btn-group-justified" role="group">
-                                        <div className="btn-group" role="group">
-                                            <button type="button" className="btn btn-default">clear</button>
-                                        </div>
-                                        <div className="btn-group" role="group">
-                                            <button type="button" className="btn btn-default">delete</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            {moreHeadersHtml}
                         </div>
                         <div className="tab-pane" id="api_info_body">
                             body
@@ -343,9 +362,9 @@ const ApiInfo = (props)=> {
 };
 // edit test content
 const ContentOfEditTest = (props)=> {
-    const padding15LR={
-        paddingLeft:15,
-        paddingRight:15
+    const padding15LR = {
+        paddingLeft: 15,
+        paddingRight: 15
     }
     return (
         <div>
