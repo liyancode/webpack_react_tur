@@ -209,11 +209,12 @@ class App extends React.Component {
                 },
                 apiInfo:{
                     method:'get',
-                    url:'http://localhost:8889/',
+                    url:'',
                     headers:[],
                     body:''
                 }
             }
+            //{k:'k1',v:'v1'},{k:'k2',v:'v2'},{k:'k3',v:'v3'}
         };
         this.handleNavBtnClick=this.handleNavBtnClick.bind(this);
         this.handleProjectSelectChange=this.handleProjectSelectChange.bind(this);
