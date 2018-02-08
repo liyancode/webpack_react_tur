@@ -195,11 +195,33 @@ class App extends React.Component {
         super(props);
         this.state={
             currentPage:'tests',
-            loginUser:'testuser'
+            loginUser:'testuser',
+            editTest:{
+                valid:{
+                    vu:true,
+                    loop:true,
+                    url:false
+                },
+                load:{
+                    vu:1,
+                    loop:1,
+                    isFunctionTest:false
+                },
+                apiInfo:{
+                    method:'get',
+                    url:'http://localhost:8889/',
+                    headers:[],
+                    body:''
+                }
+            }
         };
         this.handleNavBtnClick=this.handleNavBtnClick.bind(this);
         this.handleProjectSelectChange=this.handleProjectSelectChange.bind(this);
         this.handleNewTestManuallyClick=this.handleNewTestManuallyClick.bind(this);
+        this.handleEditTestInputOnMouseLeave=this.handleEditTestInputOnMouseLeave.bind(this);
+        this.handleEditTestIsFuncTestCheckBoxOnChange=this.handleEditTestIsFuncTestCheckBoxOnChange.bind(this);
+        this.handleEditTestSubmitBtnClick=this.handleEditTestSubmitBtnClick.bind(this);
+        this.handleEditTestSelectMethodOnChange=this.handleEditTestSelectMethodOnChange.bind(this);
     }
     handleNavBtnClick(e){
         this.setState({
@@ -217,6 +239,62 @@ class App extends React.Component {
         this.setState({
             currentPage:"editTest"
         });
+    }
+
+    // vu/loop/url input onchange
+    handleEditTestInputOnMouseLeave(e){
+        const tmpValid=e.target.checkValidity();
+        const tmpValue=e.target.value;
+        const dataInput=e.target.getAttribute('data-input');
+        let editTest=Object.assign({},this.state.editTest);
+        let valid=Object.assign({},editTest.valid);
+
+        if(dataInput==='virtual_users'){
+            valid.vu=tmpValid;
+            editTest.load.vu=parseInt(tmpValue);
+        }else if(dataInput==='loop_count'){
+            valid.loop=tmpValid;
+            editTest.load.loop=parseInt(tmpValue);
+        }else if(dataInput==='url'){
+            valid.url=tmpValid;
+            editTest.apiInfo.url=tmpValue;
+        }else{
+            //error
+        }
+        editTest.valid=valid;
+        this.setState(
+            {
+                editTest:editTest
+            }
+        );
+    }
+    // is function test checkbox onchange
+    handleEditTestIsFuncTestCheckBoxOnChange(e){
+        console.log('handleEditTestIsFuncTestCheckBoxOnChange');
+        let editTest=Object.assign({},this.state.editTest);
+        editTest.load.isFunctionTest=e.target.checked;
+        this.setState(
+            {
+                editTest:editTest
+            }
+        );
+    }
+
+    // http method select onchange
+    handleEditTestSelectMethodOnChange(e){
+        console.log('handleEditTestSelectMethodOnChange');
+        let editTest=Object.assign({},this.state.editTest);
+        editTest.apiInfo.method=e.target.value;
+        this.setState(
+            {
+                editTest:editTest
+            }
+        );
+    }
+
+    // submit test button click
+    handleEditTestSubmitBtnClick(){
+        console.log(this.state);
     }
 
     //componentWillUpdate(nextProps, nextState) {
@@ -247,6 +325,11 @@ class App extends React.Component {
                                                        dataOfProjects={tempprjs}
                                                        dataOfTests={temdata}
                                                        dataOfReports={temprpts}
+                                                       editTest={this.state.editTest}
+                                                       editTestInputOnMouseLeave={this.handleEditTestInputOnMouseLeave}
+                                                       editTestIsFuncTestCheckBoxOnChange={this.handleEditTestIsFuncTestCheckBoxOnChange}
+                                                       editTestSubmitBtnClick={this.handleEditTestSubmitBtnClick}
+                                                       editTestSelectMethodOnChange={this.handleEditTestSelectMethodOnChange}
                                     />
                             </div>
                         </div>
