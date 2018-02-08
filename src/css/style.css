@@ -14,3 +14,23 @@
   background-color: transparent;
   border-right: 2px solid #563d7c;
 }
+i.glyphicon{
+  margin-right: 5px;
+}
+
+.highlight{
+  padding: 9px 14px;
+  margin-bottom: 14px;
+  /*background-color: #FaFaFa;*/
+  border: 1px solid #e1e1e8;
+  border-radius: 4px;
+}
+
+input:required:valid{
+  background-color: #ddffdd;
+}
+
+input:required:invalid {
+  border-color: #d43f3a;
+  background-color: #ffdddd;
+}
