@@ -262,7 +262,7 @@ const ApiInfo = (props)=> {
         borderTop: 0,
         marginTop: 2
     }
-    const headers = props.testApiInfo.headers.slice();
+    const headers = props.testApiInfo.headers;
     //more headers
     let moreHeadersHtml = [];
     let idxi=0;
@@ -270,25 +270,27 @@ const ApiInfo = (props)=> {
         moreHeadersHtml.push(
             <div className="row" key={"header_"+i}>
                 <div className="col-lg-4">
-                    <input className="form-control" type="text" defaultValue={headers[i].k} name={"header"+i+"_k"} onChange={props.headerInputOnChange} style={styleBorderTop0}/>
+                    <input className="form-control" type="text" value={headers[i].k || ''} name={"header"+headers[i].hid+"_k"} onChange={props.headerInputOnChange} style={styleBorderTop0}/>
                 </div>
                 <div className="col-lg-6">
-                    <input className="form-control" type="text" defaultValue={headers[i].v} name={"header"+i+"_v"} onChange={props.headerInputOnChange} style={styleBorderTop0}/>
+                    <input className="form-control" type="text" value={headers[i].v || ''} name={"header"+headers[i].hid+"_v"} onChange={props.headerInputOnChange} style={styleBorderTop0}/>
                 </div>
                 <div className="col-lg-2">
                     <div className="btn-group btn-group-justified" role="group">
                         <div className="btn-group" role="group">
-                            <button type="button" className="btn btn-default" data-hid={""+i} data-clearOrDelete="clear" onClick={props.headerInputClearOrDeleteOnClick}>clear</button>
+                            <button type="button" className="btn btn-default" data-hid={""+headers[i].hid} data-clearordelete="clear" onClick={props.headerInputClearOrDeleteOnClick}>clear</button>
                         </div>
                         <div className="btn-group" role="group">
-                            <button type="button" className="btn btn-default" data-hid={""+i} data-clearOrDelete="delete" onClick={props.headerInputClearOrDeleteOnClick}>delete</button>
+                            <button type="button" className="btn btn-default" data-hid={""+headers[i].hid} data-clearordelete="delete" onClick={props.headerInputClearOrDeleteOnClick}>delete</button>
                         </div>
                     </div>
                 </div>
             </div>);
-        idxi++;
+        if(parseInt(headers[i].hid)>idxi){
+            idxi=parseInt(headers[i].hid);
+        }
     }
-
+    idxi++;
     moreHeadersHtml.push(
         <div className="row api_info_header" key={"header_"+idxi}>
             <div className="col-lg-4">
