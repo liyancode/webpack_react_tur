@@ -297,7 +297,6 @@ class App extends React.Component {
 
     // api info headers input onchange
     handleEditTestHeaderInputOnChange(e){
-        let editTest=Object.assign({},this.state.editTest);
         const target=e.target;
         const name=target.name;
         const idx=name.split('_');
@@ -305,6 +304,8 @@ class App extends React.Component {
         const idxKorV=idx[1];
         console.log(idx);
         const value=target.value;
+
+        let editTest=Object.assign({},this.state.editTest);
         let headers=editTest.apiInfo.headers;
         let existed=false;
         for(let i=0;i<headers.length;i++){
@@ -337,8 +338,28 @@ class App extends React.Component {
     handleEditTestHeaderInputClearOrDeleteOnClick(e){
         const target=e.target;
         const hid=target.getAttribute("data-hid");
-        const clearOrDelete=target.getAttribute("data-clearOrDelete");
+        const clearOrDelete=target.getAttribute("data-clearordelete");
 
+        let editTest=Object.assign({},this.state.editTest);
+        let headers=editTest.apiInfo.headers;
+        for(let i=0;i<headers.length;i++){
+            if(hid===headers[i]["hid"]){
+                if(clearOrDelete==="clear"){
+                    headers[i]={"hid":hid,"k":"","v":""}
+
+                }else if(clearOrDelete==="delete"){
+                    headers.splice(i,1);
+                }
+                break;
+            }
+        }
+        editTest.apiInfo.headers=headers;
+        console.log(headers);
+        this.setState(
+            {
+                editTest:editTest
+            }
+        );
     }
     // submit test button click
     handleEditTestSubmitBtnClick(){
