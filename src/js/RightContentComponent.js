@@ -265,48 +265,47 @@ const ApiInfo = (props)=> {
     const headers = props.testApiInfo.headers.slice();
     //more headers
     let moreHeadersHtml = [];
-    for (var i = 0; i < headers.length; i++) {
-        console.log(headers[i]);
+    let idxi=0;
+    for (let i = 0; i < headers.length; i++) {
         moreHeadersHtml.push(
             <div className="row" key={"header_"+i}>
                 <div className="col-lg-4">
-                    <input className="form-control" type="text" defaultValue={headers[i].k} style={styleBorderTop0}/>
+                    <input className="form-control" type="text" defaultValue={headers[i].k} name={"header"+i+"_k"} onChange={props.headerInputOnChange} style={styleBorderTop0}/>
                 </div>
                 <div className="col-lg-6">
-                    <input className="form-control" type="text" defaultValue={headers[i].v} style={styleBorderTop0}/>
+                    <input className="form-control" type="text" defaultValue={headers[i].v} name={"header"+i+"_v"} onChange={props.headerInputOnChange} style={styleBorderTop0}/>
                 </div>
                 <div className="col-lg-2">
                     <div className="btn-group btn-group-justified" role="group">
                         <div className="btn-group" role="group">
-                            <button type="button" className="btn btn-default">clear</button>
+                            <button type="button" className="btn btn-default" data-hid={""+i} data-clearOrDelete="clear" onClick={props.headerInputClearOrDeleteOnClick}>clear</button>
                         </div>
                         <div className="btn-group" role="group">
-                            <button type="button" className="btn btn-default">delete</button>
+                            <button type="button" className="btn btn-default" data-hid={""+i} data-clearOrDelete="delete" onClick={props.headerInputClearOrDeleteOnClick}>delete</button>
                         </div>
                     </div>
                 </div>
             </div>);
+        idxi++;
     }
 
-    if(moreHeadersHtml.length==0){
-        moreHeadersHtml.push(
-            <div className="row api_info_header" key="header_0">
-                <div className="col-lg-4">
-                    <input className="form-control" type="text" style={styleBorderTop0}/>
-                </div>
-                <div className="col-lg-6">
-                    <input className="form-control" type="text" style={styleBorderTop0}/>
-                </div>
-                <div className="col-lg-2">
-                    <div className="btn-group btn-group-justified" role="group">
-                        <div className="btn-group" role="group">
-                            <button type="button" className="btn btn-default">+</button>
-                        </div>
-                    </div>
-                </div>
+    moreHeadersHtml.push(
+        <div className="row api_info_header" key={"header_"+idxi}>
+            <div className="col-lg-4">
+                <input className="form-control" type="text" name={"header"+idxi+"_k"} onChange={props.headerInputOnChange} style={styleBorderTop0}/>
             </div>
-        );
-    }
+            <div className="col-lg-6">
+                <input className="form-control" type="text" name={"header"+idxi+"_v"} onChange={props.headerInputOnChange} style={styleBorderTop0}/>
+            </div>
+            {/*<div className="col-lg-2">*/}
+                {/*<div className="btn-group btn-group-justified" role="group">*/}
+                    {/*<div className="btn-group" role="group">*/}
+                        {/*<button type="button" className="btn btn-default">+</button>*/}
+                    {/*</div>*/}
+                {/*</div>*/}
+            {/*</div>*/}
+        </div>
+    );
 
     return (
         <div className="col-sm-12">
@@ -384,6 +383,8 @@ const ContentOfEditTest = (props)=> {
                     <ApiInfo testApiInfo={props.editTest.apiInfo}
                              inputOnMouseLeave={props.editTestInputOnMouseLeave}
                              selectMethodOnChange={props.editTestSelectMethodOnChange}
+                             headerInputOnChange={props.editTestHeaderInputOnChange}
+                             headerInputClearOrDeleteOnClick={props.editTestHeaderInputClearOrDeleteOnClick}
                         />
                 </div>
             </div>
@@ -426,6 +427,8 @@ const RightContentComponent = (props)=> {
                                editTestIsFuncTestCheckBoxOnChange={props.editTestIsFuncTestCheckBoxOnChange}
                                editTestSubmitBtnClick={props.editTestSubmitBtnClick}
                                editTestSelectMethodOnChange={props.editTestSelectMethodOnChange}
+                               editTestHeaderInputOnChange={props.editTestHeaderInputOnChange}
+                               editTestHeaderInputClearOrDeleteOnClick={props.editTestHeaderInputClearOrDeleteOnClick}
                 />
         );
     } else {
