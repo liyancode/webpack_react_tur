@@ -210,7 +210,7 @@ class App extends React.Component {
                 apiInfo:{
                     method:'get',
                     url:'',
-                    headers:[],
+                    headers:[{hid:'0',k:'k1',v:'v1'},{hid:'1',k:'k2',v:'v2'}],
                     body:''
                 }
             }
@@ -223,6 +223,8 @@ class App extends React.Component {
         this.handleEditTestIsFuncTestCheckBoxOnChange=this.handleEditTestIsFuncTestCheckBoxOnChange.bind(this);
         this.handleEditTestSubmitBtnClick=this.handleEditTestSubmitBtnClick.bind(this);
         this.handleEditTestSelectMethodOnChange=this.handleEditTestSelectMethodOnChange.bind(this);
+        this.handleEditTestHeaderInputOnChange=this.handleEditTestHeaderInputOnChange.bind(this);
+        this.handleEditTestHeaderInputClearOrDeleteOnClick=this.handleEditTestHeaderInputClearOrDeleteOnClick.bind(this);
     }
     handleNavBtnClick(e){
         this.setState({
@@ -293,6 +295,51 @@ class App extends React.Component {
         );
     }
 
+    // api info headers input onchange
+    handleEditTestHeaderInputOnChange(e){
+        let editTest=Object.assign({},this.state.editTest);
+        const target=e.target;
+        const name=target.name;
+        const idx=name.split('_');
+        const idxHid=idx[0].split('header')[1];
+        const idxKorV=idx[1];
+        console.log(idx);
+        const value=target.value;
+        let headers=editTest.apiInfo.headers;
+        let existed=false;
+        for(let i=0;i<headers.length;i++){
+            if(headers[i]["hid"]===idxHid){
+                headers[i][idxKorV]=value;
+                existed=true;
+            }
+        }
+        if(!existed){
+            if(idxKorV==='k'){
+                headers.push({
+                    "hid":idx[0].split('header')[1],
+                    "k":value
+                })
+            }else{
+                headers.push({
+                    "hid":idx[0].split('header')[1],
+                    "v":value
+                })
+            }
+
+        }
+        editTest.apiInfo.headers=headers;
+        this.setState(
+            {
+                editTest:editTest
+            }
+        );
+    }
+    handleEditTestHeaderInputClearOrDeleteOnClick(e){
+        const target=e.target;
+        const hid=target.getAttribute("data-hid");
+        const clearOrDelete=target.getAttribute("data-clearOrDelete");
+
+    }
     // submit test button click
     handleEditTestSubmitBtnClick(){
         console.log(this.state);
@@ -331,6 +378,8 @@ class App extends React.Component {
                                                        editTestIsFuncTestCheckBoxOnChange={this.handleEditTestIsFuncTestCheckBoxOnChange}
                                                        editTestSubmitBtnClick={this.handleEditTestSubmitBtnClick}
                                                        editTestSelectMethodOnChange={this.handleEditTestSelectMethodOnChange}
+                                                       editTestHeaderInputOnChange={this.handleEditTestHeaderInputOnChange}
+                                                       editTestHeaderInputClearOrDeleteOnClick={this.handleEditTestHeaderInputClearOrDeleteOnClick}
                                     />
                             </div>
                         </div>
