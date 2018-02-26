@@ -356,7 +356,15 @@ const ApiInfo = (props)=> {
                             {moreHeadersHtml}
                         </div>
                         <div className="tab-pane" id="api_info_body">
-                            body
+                            <div className="row">
+                                <br/>
+                                <div className="col-lg-12">
+                                    <div className="form-group">
+                                        <label>Body:</label>
+                                        <textarea className="form-control" rows="5" id="comment" onChange={props.bodyTextareaOnChange}></textarea>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -391,6 +399,7 @@ const ContentOfEditTest = (props)=> {
                              headerInputOnChange={props.editTestHeaderInputOnChange}
                              headerInputClearOrDeleteOnClick={props.editTestHeaderInputClearOrDeleteOnClick}
                              httpMethod={props.editTestHttpMethod}
+                             bodyTextareaOnChange={props.editTestBodyTextareaOnChange}
                         />
                 </div>
             </div>
@@ -436,6 +445,7 @@ const RightContentComponent = (props)=> {
                                editTestHeaderInputOnChange={props.editTestHeaderInputOnChange}
                                editTestHeaderInputClearOrDeleteOnClick={props.editTestHeaderInputClearOrDeleteOnClick}
                                editTestHttpMethod={props.editTestHttpMethod}
+                               editTestBodyTextareaOnChange={props.editTestBodyTextareaOnChange}
                 />
         );
     } else {

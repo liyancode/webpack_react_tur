@@ -225,6 +225,7 @@ class App extends React.Component {
         this.handleEditTestSelectMethodOnChange=this.handleEditTestSelectMethodOnChange.bind(this);
         this.handleEditTestHeaderInputOnChange=this.handleEditTestHeaderInputOnChange.bind(this);
         this.handleEditTestHeaderInputClearOrDeleteOnClick=this.handleEditTestHeaderInputClearOrDeleteOnClick.bind(this);
+        this.handleEditTestBodyTextareaOnChange=this.handleEditTestBodyTextareaOnChange.bind(this);
     }
     handleNavBtnClick(e){
         this.setState({
@@ -354,7 +355,18 @@ class App extends React.Component {
             }
         }
         editTest.apiInfo.headers=headers;
-        console.log(headers);
+        this.setState(
+            {
+                editTest:editTest
+            }
+        );
+    }
+    // body text area onchange
+    handleEditTestBodyTextareaOnChange(e){
+        const target=e.target;
+        let editTest=Object.assign({},this.state.editTest);
+
+        editTest.apiInfo.body=target.value;
         this.setState(
             {
                 editTest:editTest
@@ -402,6 +414,7 @@ class App extends React.Component {
                                                        editTestHeaderInputOnChange={this.handleEditTestHeaderInputOnChange}
                                                        editTestHeaderInputClearOrDeleteOnClick={this.handleEditTestHeaderInputClearOrDeleteOnClick}
                                                        editTestHttpMethod={this.state.editTest.apiInfo.method}
+                                                       editTestBodyTextareaOnChange={this.handleEditTestBodyTextareaOnChange}
                                     />
                             </div>
                         </div>
