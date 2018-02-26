@@ -401,6 +401,7 @@ class App extends React.Component {
                                                        editTestSelectMethodOnChange={this.handleEditTestSelectMethodOnChange}
                                                        editTestHeaderInputOnChange={this.handleEditTestHeaderInputOnChange}
                                                        editTestHeaderInputClearOrDeleteOnClick={this.handleEditTestHeaderInputClearOrDeleteOnClick}
+                                                       editTestHttpMethod={this.state.editTest.apiInfo.method}
                                     />
                             </div>
                         </div>

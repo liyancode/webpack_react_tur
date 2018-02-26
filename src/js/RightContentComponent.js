@@ -308,7 +308,10 @@ const ApiInfo = (props)=> {
             {/*</div>*/}
         </div>
     );
-
+    let bodyTabLi=<li><a data-toggle="tab" href="#api_info_body">Body</a></li>;
+    if(props.httpMethod==='get'){
+        bodyTabLi=<li className="disabled"><a href="#api_info_body">Body</a></li>;
+    }
     return (
         <div className="col-sm-12">
             <div className="row">
@@ -336,7 +339,7 @@ const ApiInfo = (props)=> {
                 <div className="col-lg-12">
                     <ul className="nav nav-tabs">
                         <li className="active"><a data-toggle="tab" href="#api_info_headers">Headers</a></li>
-                        <li ><a data-toggle="tab" href="#api_info_body">Body</a></li>
+                        {bodyTabLi}
                     </ul>
                 </div>
                 <div className="col-lg-12">
@@ -387,6 +390,7 @@ const ContentOfEditTest = (props)=> {
                              selectMethodOnChange={props.editTestSelectMethodOnChange}
                              headerInputOnChange={props.editTestHeaderInputOnChange}
                              headerInputClearOrDeleteOnClick={props.editTestHeaderInputClearOrDeleteOnClick}
+                             httpMethod={props.editTestHttpMethod}
                         />
                 </div>
             </div>
@@ -431,6 +435,7 @@ const RightContentComponent = (props)=> {
                                editTestSelectMethodOnChange={props.editTestSelectMethodOnChange}
                                editTestHeaderInputOnChange={props.editTestHeaderInputOnChange}
                                editTestHeaderInputClearOrDeleteOnClick={props.editTestHeaderInputClearOrDeleteOnClick}
+                               editTestHttpMethod={props.editTestHttpMethod}
                 />
         );
     } else {
