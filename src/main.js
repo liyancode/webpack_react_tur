@@ -226,6 +226,7 @@ class App extends React.Component {
         this.handleEditTestHeaderInputOnChange=this.handleEditTestHeaderInputOnChange.bind(this);
         this.handleEditTestHeaderInputClearOrDeleteOnClick=this.handleEditTestHeaderInputClearOrDeleteOnClick.bind(this);
         this.handleEditTestBodyTextareaOnChange=this.handleEditTestBodyTextareaOnChange.bind(this);
+        this.handleTestEditClick=this.handleTestEditClick.bind(this);
     }
     handleNavBtnClick(e){
         this.setState({
@@ -243,6 +244,37 @@ class App extends React.Component {
         this.setState({
             currentPage:"editTest"
         });
+    }
+
+    handleTestEditClick(e){
+        const test=JSON.parse(e.target.getAttribute('data-test'));
+        // {
+        //     "id": 11,
+        //     "testid": "1801110133_HB_RW",
+        //     "status": "success",
+        //     "username": "admin666",
+        //     "api_content": "{\"API\":{\"ServerName_or_IP\":\"www.hellowd.com\",\"Http_or_Https\":\"http\",\"Method\":\"GET\",\"Path\":\"\",\"Parameters\":null,\"BodyValTypes\":\"form-data\",\"BodyData\":\"\"},\"Headers\":[],\"ThreadProperties\":{\"Number_of_Threads\":\"1\",\"LoopCount\":\"10\"},\"SchedulerConfiguration\":{\"DurationSeconds\":\"300\"},\"UserDefinedVariables\":[],\"PerfmonSwitch\":\"false\",\"TargetHost\":\"\",\"FunctionTest\":\"false\"}",
+        //     "api_vuser_count": 1,
+        //     "api_loop_count": 10,
+        //     "api_target_host": "",
+        //     "time_stamp": "2018-01-11 01:33:19 UTC",
+        //     "meet_slo": "yes",
+        //     "deleted": 0,
+        //     "deleted_by": null,
+        //     "deleted_at": null,
+        //     "project": "Default",
+        //     "test_tag": null
+        // }
+        const apiContent=JSON.parse(test["api_content"]);
+        let editTest=Object.assign({},this.state.editTest);
+        editTest.load.vu=test["api_vuser_count"];
+        editTest.load.loop=test["api_loop_count"];
+        editTest.load.isFunctionTest=(apiContent["FunctionTest"]=='true');
+
+        const api=apiContent["API"];
+        editTest.apiInfo.method=api["Method"].toLowerCase();
+        console.log(editTest);
+
     }
 
     // vu/loop/url input onchange
@@ -376,6 +408,12 @@ class App extends React.Component {
     // submit test button click
     handleEditTestSubmitBtnClick(){
         console.log(this.state);
+        const valid=this.state.editTest.valid;
+        if(valid.loop&&valid.url&&valid.vu){
+            alert("good");
+        }else{
+            alert("false");
+        }
     }
 
     //componentWillUpdate(nextProps, nextState) {
@@ -405,6 +443,7 @@ class App extends React.Component {
                                                        projectSelectOnChange={this.handleProjectSelectChange}
                                                        dataOfProjects={tempprjs}
                                                        dataOfTests={temdata}
+                                                       testEditClick={this.handleTestEditClick}
                                                        dataOfReports={temprpts}
                                                        editTest={this.state.editTest}
                                                        editTestInputOnMouseLeave={this.handleEditTestInputOnMouseLeave}
@@ -415,6 +454,7 @@ class App extends React.Component {
                                                        editTestHeaderInputClearOrDeleteOnClick={this.handleEditTestHeaderInputClearOrDeleteOnClick}
                                                        editTestHttpMethod={this.state.editTest.apiInfo.method}
                                                        editTestBodyTextareaOnChange={this.handleEditTestBodyTextareaOnChange}
+                                                       editTestIsFunctionTest={this.state.editTest.load.isFunctionTest}
                                     />
                             </div>
                         </div>

@@ -82,8 +82,8 @@ const ContentTestsTable = (props)=> {
                         <a href="#">{element["testid"]}</a>
                     </td>
                     <td>
-                        <a href="#">
-                            <span className="glyphicon glyphicon-edit"></span>
+                        <a data-test={JSON.stringify(element)} href="#" onClick={props.testEditOnClick}>
+                            <span className="glyphicon glyphicon-edit" data-test={JSON.stringify(element)}></span>
                         </a>
                     </td>
                     <td>
@@ -215,13 +215,23 @@ const ContentOfTests = (props)=> {
                     <br />
                 </div>
                 <div className="col-sm-12">
-                    <ContentTestsTable dataArr={props.testsDataArr}/>
+                    <ContentTestsTable dataArr={props.testsDataArr} testEditOnClick={props.testEditClick}/>
                 </div>
             </div>
         </div>
     );
 };
 const LoadConfig = (props)=> {
+    let vuInput=<input className="form-control" type="number" value={props.testLoad.vu||'1'} max="15" min="1"
+                       data-input="virtual_users" required='true' onChange={props.inputOnMouseLeave}/>;
+    let lcInput=<input className="form-control" type="number" value={props.testLoad.loop||'1'} min="1" max="100"
+                       data-input="loop_count" required='true' onChange={props.inputOnMouseLeave}/>;
+    if(props.isFunctionTest){
+        vuInput=<input className="form-control" type="number" disabled value="1" max="15" min="1"
+                       data-input="virtual_users" required='true' onChange={props.inputOnMouseLeave}/>;
+        lcInput=<input className="form-control" type="number" disabled value="3" min="1" max="100"
+                       data-input="loop_count" required='true' onChange={props.inputOnMouseLeave}/>;
+    }
 
     return (
 
@@ -229,13 +239,11 @@ const LoadConfig = (props)=> {
             <div className="row">
                 <div className="col-lg-3">
                     <h4><span className="label label-default">Virtual Users ( Max = 15 )</span></h4>
-                    <input className="form-control" type="number" defaultValue={props.testLoad.vu} max="15" min="1"
-                           data-input="virtual_users" required='true' onBlur={props.inputOnMouseLeave}/>
+                    {vuInput}
                 </div>
                 <div className="col-lg-3">
                     <h4><span className="label label-default">Loop Count ( Max = 100 )</span></h4>
-                    <input className="form-control" type="number" defaultValue={props.testLoad.loop} min="1" max="100"
-                           data-input="loop_count" required='true' onBlur={props.inputOnMouseLeave}/>
+                    {lcInput}
                 </div>
                 <div className="col-lg-2 checkbox">
                     <label>
@@ -294,10 +302,10 @@ const ApiInfo = (props)=> {
     moreHeadersHtml.push(
         <div className="row api_info_header" key={"header_"+idxi}>
             <div className="col-lg-4">
-                <input className="form-control" type="text" name={"header"+idxi+"_k"} onChange={props.headerInputOnChange} style={styleBorderTop0}/>
+                <input className="form-control" type="text" value='' name={"header"+idxi+"_k"} onChange={props.headerInputOnChange} style={styleBorderTop0}/>
             </div>
             <div className="col-lg-6">
-                <input className="form-control" type="text" name={"header"+idxi+"_v"} onChange={props.headerInputOnChange} style={styleBorderTop0}/>
+                <input className="form-control" type="text" value='' name={"header"+idxi+"_v"} onChange={props.headerInputOnChange} style={styleBorderTop0}/>
             </div>
             {/*<div className="col-lg-2">*/}
                 {/*<div className="btn-group btn-group-justified" role="group">*/}
@@ -390,7 +398,9 @@ const ContentOfEditTest = (props)=> {
                     <LoadConfig testLoad={props.editTest.load}
                                 inputOnMouseLeave={props.editTestInputOnMouseLeave}
                                 isFuncTestCheckBoxOnChange={props.editTestIsFuncTestCheckBoxOnChange}
-                                submitBtnClick={props.editTestSubmitBtnClick}/>
+                                submitBtnClick={props.editTestSubmitBtnClick}
+                                isFunctionTest={props.editTestIsFunctionTest}
+                    />
                 </div>
                 <div className="row highlight" style={padding15LR}>
                     <ApiInfo testApiInfo={props.editTest.apiInfo}
@@ -432,6 +442,7 @@ const RightContentComponent = (props)=> {
                             projectsDataArr={props.dataOfProjects}
                             projectsSelectOnChange={props.projectSelectOnChange}
                             testsDataArr={props.dataOfTests}
+                            testEditClick={props.testEditClick}
                 />
         );
     } else if (props.page === 'editTest') {
@@ -446,6 +457,7 @@ const RightContentComponent = (props)=> {
                                editTestHeaderInputClearOrDeleteOnClick={props.editTestHeaderInputClearOrDeleteOnClick}
                                editTestHttpMethod={props.editTestHttpMethod}
                                editTestBodyTextareaOnChange={props.editTestBodyTextareaOnChange}
+                               editTestIsFunctionTest={props.editTestIsFunctionTest}
                 />
         );
     } else {
