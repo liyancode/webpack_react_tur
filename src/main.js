@@ -29,7 +29,7 @@ const temdata = [{
     "testid": "180117_082840_PKIG",
     "status": "error",
     "username": "admin666",
-    "api_content": "{\"API\":{\"ServerName_or_IP\":\"www.hellowd.com\",\"Http_or_Https\":\"http\",\"Method\":\"GET\",\"Path\":\"\",\"Parameters\":null,\"BodyValTypes\":\"form-data\",\"BodyData\":\"\"},\"Headers\":[],\"ThreadProperties\":{\"Number_of_Threads\":\"1\",\"LoopCount\":\"3\"},\"SchedulerConfiguration\":{\"DurationSeconds\":\"300\"},\"UserDefinedVariables\":[],\"PerfmonSwitch\":\"false\",\"TargetHost\":\"\",\"FunctionTest\":\"true\"}",
+    "api_content": "{\"API\":{\"ServerName_or_IP\":\"www.hellowd.com\",\"Http_or_Https\":\"http\",\"Method\":\"Post\",\"Path\":\"\",\"Parameters\":null,\"BodyValTypes\":\"form-data\",\"BodyData\":\"\"},\"Headers\":[[\"Accept\",\"application/json\"],[\"Authorization\",\"Bearer JYf0azPrf1RAvhUhpGZudVU9bBEa\"],[\"Accept-Language\",\"en-us\"]],\"ThreadProperties\":{\"Number_of_Threads\":\"1\",\"LoopCount\":\"3\"},\"SchedulerConfiguration\":{\"DurationSeconds\":\"300\"},\"UserDefinedVariables\":[],\"PerfmonSwitch\":\"false\",\"TargetHost\":\"\",\"FunctionTest\":\"true\"}",
     "api_vuser_count": 1,
     "api_loop_count": 3,
     "api_target_host": "",
@@ -209,6 +209,7 @@ class App extends React.Component {
                 },
                 apiInfo:{
                     method:'get',
+                    httpOrHttps:'http',
                     url:'',
                     headers:[{hid:'0',k:'k1',v:'v1'},{hid:'1',k:'k2',v:'v2'}],
                     body:''
@@ -267,14 +268,39 @@ class App extends React.Component {
         // }
         const apiContent=JSON.parse(test["api_content"]);
         let editTest=Object.assign({},this.state.editTest);
+
+        //load
         editTest.load.vu=test["api_vuser_count"];
         editTest.load.loop=test["api_loop_count"];
         editTest.load.isFunctionTest=(apiContent["FunctionTest"]=='true');
 
+        //api info
         const api=apiContent["API"];
         editTest.apiInfo.method=api["Method"].toLowerCase();
-        console.log(editTest);
+        editTest.apiInfo.url=api["Http_or_Https"].toLowerCase()+'://'+api["ServerName_or_IP"]+api["Path"]+api["Parameters"];
+        editTest.apiInfo.httpOrHttps=api["Http_or_Https"].toLowerCase();
 
+        //headers
+        const apiHeaders=apiContent["Headers"];
+        let tmpHeaders=[];
+        for(let i=0;i<apiHeaders.length;i++){
+            //{hid:'0',k:'k1',v:'v1'},{hid:'1',k:'k2',v:'v2'}
+            tmpHeaders.push({hid:''+i,k:apiHeaders[i][0],v:apiHeaders[i][1]});
+        }
+        editTest.apiInfo.headers=tmpHeaders;
+
+        //body
+        editTest.apiInfo.body=api["BodyData"]
+
+        //valid
+        editTest.valid.url=true;
+
+        this.setState({
+            currentPage:"editTest",
+            editTest:editTest
+        });
+
+        console.log(this.state);
     }
 
     // vu/loop/url input onchange
@@ -294,6 +320,7 @@ class App extends React.Component {
         }else if(dataInput==='url'){
             valid.url=tmpValid;
             editTest.apiInfo.url=tmpValue;
+            editTest.apiInfo.httpOrHttps=tmpValue.split('://')[0]
         }else{
             //error
         }
