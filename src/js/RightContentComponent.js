@@ -265,7 +265,7 @@ const LoadConfig = (props)=> {
                     <h4><span className="label label-default">Monitor Host ( optional )</span></h4>
                     <input className="form-control" type="text" required={false}
                            data-input="monitorHost" onChange={props.inputOnMouseLeave}
-                           placeholder='slce004cat001.slce004.com'/>
+                           placeholder='target host name or ip'/>
                 </div>
             </div>
         </div>
