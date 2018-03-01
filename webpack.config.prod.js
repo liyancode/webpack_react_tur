@@ -1,5 +1,4 @@
 /*-- webpack.config.prod.js --*/
-/*-- webpack.config.prod.js --*/
 var webpack=require("webpack");
 var HtmlWebpackPlugin=require("html-webpack-plugin");
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
