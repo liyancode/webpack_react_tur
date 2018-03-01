@@ -223,14 +223,14 @@ const ContentOfTests = (props)=> {
 };
 const LoadConfig = (props)=> {
     let vuInput=<input className="form-control" type="number" value={props.testLoad.vu||'1'} max="15" min="1"
-                       data-input="virtual_users" required='true' onChange={props.inputOnMouseLeave}/>;
+                       data-input="virtual_users" required={true} onChange={props.inputOnMouseLeave}/>;
     let lcInput=<input className="form-control" type="number" value={props.testLoad.loop||'1'} min="1" max="100"
-                       data-input="loop_count" required='true' onChange={props.inputOnMouseLeave}/>;
+                       data-input="loop_count" required={true} onChange={props.inputOnMouseLeave}/>;
     if(props.isFunctionTest){
         vuInput=<input className="form-control" type="number" disabled value="1" max="15" min="1"
-                       data-input="virtual_users" required='true' onChange={props.inputOnMouseLeave}/>;
+                       data-input="virtual_users" required={true} onChange={props.inputOnMouseLeave}/>;
         lcInput=<input className="form-control" type="number" disabled value="3" min="1" max="100"
-                       data-input="loop_count" required='true' onChange={props.inputOnMouseLeave}/>;
+                       data-input="loop_count" required={true} onChange={props.inputOnMouseLeave}/>;
     }
 
     return (
@@ -258,10 +258,16 @@ const LoadConfig = (props)=> {
                 <div className="col-lg-4">
                     <br />
                     <button className="btn btn-danger" onClick={props.submitBtnClick}>Submit test</button>
-
                 </div>
             </div>
-
+            <div className="row">
+                <div className="col-lg-8">
+                    <h4><span className="label label-default">Monitor Host ( optional )</span></h4>
+                    <input className="form-control" type="text" required={false}
+                           data-input="monitorHost" onChange={props.inputOnMouseLeave}
+                           placeholder='slce004cat001.slce004.com'/>
+                </div>
+            </div>
         </div>
     );
 };
