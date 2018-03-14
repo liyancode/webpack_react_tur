@@ -49,7 +49,7 @@ module.exports={
     contentBase:'./dist',
     hot:true,
     proxy: {
-      "/api/**": "http://localhost:4567"
+      "/rest/**": "http://10.236.91.218:4567"
     }
   }
 }

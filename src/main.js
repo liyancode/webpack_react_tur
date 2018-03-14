@@ -9,8 +9,6 @@ import 'jquery';
 import 'bootstrap/dist/js/bootstrap';
 import './3rdp/dataTables/js/jquery.dataTables.min.js';
 
-import * as CommonFuctions from './js/CommonFunctions.js';
-
 import * as ModalDialogComponents from './js/ModalDialogComponents.js';
 
 import HeaderNavbar from './js/HeaderNavbar.js';
